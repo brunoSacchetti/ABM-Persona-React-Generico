@@ -13,6 +13,7 @@ import { persona } from "../../types/persona";
 import { deleteData, getData } from "../../services/GenericFetch";
 import { ModalFormulario } from "../ModalFormulario/ModalFormulario";
 import swal from 'sweetalert2'
+import BackendClient from '../../services/BackendClient';
 
 // Definición de las propiedades que recibe el componente
 interface props {
@@ -25,6 +26,8 @@ export const TablePersonas = (
 ) => {
   // URL de la API obtenida desde las variables de entorno
   const urlapi = import.meta.env.VITE_API_URL;
+
+  const personaBack = new BackendClient<persona>(urlapi + '/api/personas');
 
   // Estado para controlar la carga de datos
   const [Loading, setLoading] = useState(false);
@@ -48,7 +51,7 @@ export const TablePersonas = (
   // Función para obtener los datos de personas desde la API
   async function getDataPersonas() {
     setLoading(true);
-    await getData<persona[]>(urlapi + 'api/personas')
+    await personaBack.getAll()
       .then((personaData) => {
         setPersonas(personaData);
         setLoading(false);

@@ -1,7 +1,13 @@
-// Función generica para obtener datos mediante una solicitud GET
+// Función genérica para obtener datos mediante una solicitud GET
 export async function getData<T>(path: string): Promise<T> {
   try {
-    const response = await fetch(`${path}`);
+    const response = await fetch(`${path}`, {
+      method: "GET",
+      mode: 'cors',  // Añadir modo CORS
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
     if (!response.ok) {
       throw Error(response.statusText);
     }
@@ -11,11 +17,12 @@ export async function getData<T>(path: string): Promise<T> {
   }
 }
 
-// Función generica para enviar datos mediante una solicitud POST
+// Función genérica para enviar datos mediante una solicitud POST
 export async function postData<T>(path: string, data: T): Promise<T> {
   try {
     const response = await fetch(`${path}`, {
       method: "POST",
+      mode: 'cors',  // Añadir modo CORS
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -31,18 +38,18 @@ export async function postData<T>(path: string, data: T): Promise<T> {
   }
 }
 
-// Función generica para actualizar datos mediante una solicitud PUT
+// Función genérica para actualizar datos mediante una solicitud PUT
 export async function putData<T>(path: string, data: T): Promise<T> {
   try {
     const response = await fetch(`${path}`, {
       method: "PUT",
+      mode: 'cors',  // Añadir modo CORS
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data), // Convierte los datos a JSON y los envía en el cuerpo de la solicitud
     });
-
     if (!response.ok) {
       throw Error(response.statusText);
     }
@@ -52,11 +59,12 @@ export async function putData<T>(path: string, data: T): Promise<T> {
   }
 }
 
-// Función generica para eliminar datos mediante una solicitud DELETE
+// Función genérica para eliminar datos mediante una solicitud DELETE
 export async function deleteData(path: string) {
   try {
     const response = await fetch(`${path}`, {
       method: "DELETE",
+      mode: 'cors',  // Añadir modo CORS
       headers: {
         "Content-Type": "application/json",
       },
